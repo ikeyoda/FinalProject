@@ -3,7 +3,6 @@
 #include <map>
 #include <string>
 #include <set>
-#include <vector>
 
 /* Welcome to the Matrix-based Graph
 -This graph converts Custer's unordered_map<string, set<string>> into a 2D vector<bool> where each vector is the size of the map
@@ -22,6 +21,6 @@ public:
 	MatrixGraph(std::unordered_map<std::string, std::set<std::string>>& matrixList);
 
 	bool CheckArtist(std::string artist); //check the mapper to see if an artist exists
-	std::vector<std::string> searchAdjacents(std::string artist); //return a vector that has all the "True" elements in the vector at the given index
+	std::set<std::string> GetAdjacents(std::string artist); //return a vector that has all the "True" elements in the vector at the given index
 };
 

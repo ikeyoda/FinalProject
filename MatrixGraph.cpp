@@ -43,10 +43,10 @@ bool MatrixGraph::CheckArtist(std::string artist) //check the mapper to see if a
 		return false;
 }
 	
-std::vector<std::string> MatrixGraph::searchAdjacents(std::string artist) //return a vector that has all the "True" elements in the vector at the given index
+std::set<std::string> MatrixGraph::GetAdjacents(std::string artist) //return a vector that has all the "True" elements in the vector at the given index
 {
 	int wantedArtist = mapper[artist];	//index of the artist we want the adjacent artists of
-	std::vector<std::string> adjList;
+	std::set<std::string> adjList;
 
 	//iterate through the mapper, and check their indices within the wanted artist's adjacent vector. If "true", they're adjacent
 	for (auto iter = mapper.begin(); iter != mapper.end(); ++iter)
@@ -54,7 +54,7 @@ std::vector<std::string> MatrixGraph::searchAdjacents(std::string artist) //retu
 		int currArtist = iter->second;	//index of the current artist in the iteration
 
 		if (matrix[wantedArtist][currArtist])	//if the value at the indices of the current artist and the wanted artist are true, meaning adjacent. . .
-			adjList.push_back(iter->first);		//push the value of the current artist into the vector to be returned
+			adjList.insert(iter->first);		//push the value of the current artist into the vector to be returned
 	}
 
 	return adjList;
