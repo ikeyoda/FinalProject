@@ -1,12 +1,10 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <map>
 #include <unordered_map>
 #include <set>
-#include <vector>
 using namespace std;
-int main()
+unordered_map<string,set<string>> returnMap()
 {
     ifstream file;
     int count = 0;
@@ -15,8 +13,7 @@ int main()
     string tempKey = "";
     string tempValue = "";
     unordered_map<string, set<string>> masterList;
-    //while (getline(file, line)) {
-    for(int k = 0; k < 1000; k++){
+    while (getline(file, line)) {
         tempKey = "";
         getline(file, line);
         if (line.size() < 2) {
@@ -42,7 +39,5 @@ int main()
         }
         masterList[tempKey] = tempSet;
     }
-    for (auto iter = masterList["102 Boyz"].begin(); iter != masterList["102 Boyz"].end(); iter++) {
-        cout << *iter << endl;
-    }
+    return masterList;
 }
