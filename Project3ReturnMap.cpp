@@ -18,7 +18,7 @@ unordered_map<string,set<string>> returnMap()
         getline(file, line);
         set<string> tempSet = {};
         for (int i = 0; i < line.size(); i++) {
-            if (line[i] != '‡') {
+            if (line[i] != '|') {
                 tempKey.push_back(line[i]);
             }
             else {
