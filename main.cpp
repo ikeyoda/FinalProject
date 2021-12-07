@@ -4,12 +4,13 @@
 #include <unordered_map>
 #include "ListGraph.cpp"
 #include "MatrixGraph.cpp"
+#include "Project3ReturnMap.cpp"
 //#include "MatrixGraph.h"
 // unordered_map<string, set<string>
 using namespace std;
 int main() {
 //map<string, set(string)
-
+    unordered_map<string, set<string>> daMap = returnMap();
 //Check artist name
     cout << "Welcome to Custer, Ethan, and Isaac's Spotify project!" << endl;
     cout << "Please enter the name of the artist you want to check:" << endl;
@@ -17,19 +18,19 @@ int main() {
     int levelNum;
     cin >> artist;
     cout << artist << endl;
-    cout << "Please enter how many iterations you want to go through for this project" << endl;
+    cout << "Please enter how many iterations you want to go through for this project:" << endl;
     cin >> levelNum;
 
-    unordered_map<string, set<string>> daMap;
-    set<string> underKanye;
-    underKanye.insert("JayZ");
 
-    set<string> underJayZ;
-    underJayZ.insert("kanye");
-    underKanye.insert("Beyonce");
-    underKanye.insert("Eminem");
-    daMap["kanye"] = underKanye;
-    daMap["JayZ"] = underJayZ;
+//    set<string> underKanye;
+//underKanye.insert("JayZ");
+
+//    set<string> underJayZ;
+//    underJayZ.insert("kanye");
+//    underKanye.insert("Beyonce");
+//    underKanye.insert("Eminem");
+//    daMap["kanye"] = underKanye;
+//    daMap["JayZ"] = underJayZ;
     queue<string> qu;
 
     MatrixGraph lookatThisGraph(daMap);
@@ -43,8 +44,10 @@ int main() {
         for (int i = 0; i < levelNum; i++)  {
             if (!qu.empty()) {
                 int quSize = qu.size();
+                cout << quSize << endl;
                 for (int j = 0; j < quSize; j++) {
                     set<string> daSet = lookatThisGraph.GetAdjacents(qu.front());
+                    cout << "iteration " "" << j << endl;
                     for (auto it = daSet.begin(); it != daSet.end(); it++) {
                         qu.push(*it);
                         levelStore[i].push_back(*it);

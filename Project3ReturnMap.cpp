@@ -8,12 +8,17 @@ unordered_map<string,set<string>> returnMap()
 {
     ifstream file;
     int count = 0;
-    file.open("output.txt");
+    file.open("/Users/isaacyoder/CLionProjects/finalProjFile/output.txt");
+
     string line;
+//    getline(file, line);
+//    cout << line << endl;
     string tempKey = "";
     string tempValue = "";
     unordered_map<string, set<string>> masterList;
+    int counter = 145000;
     while (getline(file, line)) {
+        cout << counter-- << endl;
         tempKey = "";
         getline(file, line);
         set<string> tempSet = {};

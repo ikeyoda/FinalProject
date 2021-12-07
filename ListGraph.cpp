@@ -27,6 +27,9 @@ std::set<std::string>& ListGraph::GetAdjacents(std::string artist) //returns a s
 	//When we got our data from Spotify, the artist we're looking at also appears
 	//as their own featured artist in the list. This next line of code removes themselves before
 	//the set is returned
+
+	//THIS IS BROKEN; ERASE WON"T WORK IN THIS CONTEXT DO YOUR RESEARCH BUB
+	//LOL jk just salty im not the one that got google :(
 	adjList[artist].erase(artist);
 
 	return adjList[artist];
