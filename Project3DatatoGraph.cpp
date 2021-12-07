@@ -44,7 +44,7 @@ int main()
     outFile.open("output.txt");
     int count = masterList.size();
     for (auto iter = masterList.begin(); iter != masterList.end(); iter++) {
-        outFile << iter->first << "‡";
+        outFile << iter->first << "|";
         for (auto iter2 = iter->second.begin(); iter2 != iter->second.end(); iter2++) {
             outFile << *iter2 << "^";
         }
