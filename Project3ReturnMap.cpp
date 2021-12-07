@@ -21,7 +21,7 @@ unordered_map<string,set<string>> returnMap()
         }
         set<string> tempSet = {};
         for (int i = 0; i < line.size(); i++) {
-            if (line[i] != '\n' && line[i] != ':') {
+            if (line[i] != '\n' && line[i] != '︙') {
                 tempKey.push_back(line[i]);
             }
             else {
@@ -29,7 +29,7 @@ unordered_map<string,set<string>> returnMap()
             }
         }
         for (int i = tempKey.size()+1; i < line.size(); i++) {
-            if (line[i] != '\n' && line[i] != ',') {
+            if (line[i] != '\n' && line[i] != '^') {
                 tempValue.push_back(line[i]);
             }
             else {
