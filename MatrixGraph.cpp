@@ -65,7 +65,7 @@ bool MatrixGraph::CheckArtist(std::string artist) //check the mapper to see if a
 		return false;
 }
 	
-std::set<std::string> MatrixGraph::getAdjacents(std::string artist) //return a vector that has all the "True" elements in the vector at the given index
+std::set<std::string> MatrixGraph::GetAdjacents(std::string artist) //return a vector that has all the "True" elements in the vector at the given index
 {
 	int wantedArtist = mapper[artist];	//index of the artist we want the adjacent artists of
 	std::set<std::string> adjList;
