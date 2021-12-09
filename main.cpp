@@ -2,6 +2,7 @@
 #include <queue>
 #include <set>
 #include <unordered_map>
+#include <unordered_set>
 #include "ListGraph.cpp"
 #include "MatrixGraph.cpp"
 #include "Project3ReturnMap.cpp"
@@ -13,114 +14,119 @@ int main() {
     unordered_map<string, set<string>> daMap = returnMap();
 //Check artist name
     cout << "Welcome to Custer, Ethan, and Isaac's Spotify project!" << endl;
-    cout << "Please enter the name of the artist you want to check:" << endl;
-    string artist;
-    int levelNum;
-    cin >> artist;
-    cout << artist << endl;
-    cout << "Please enter how many iterations you want to go through for this project:" << endl;
-    cin >> levelNum;
+    bool runLevel = true;
+    while (runLevel == true) {
+        cout << "Please enter the name of the artist you want to check: ";
+        string artist;
+        int levelNum;
+        getline(cin, artist);
+        cout << artist << endl;
+        cout << "Please enter how many iterations you want to go through for this project:" << endl;
+        cin >> levelNum;
+        cout << "Please enter 1 for Adjacency Matrix and 2 for Adjacency List:" << endl;
+        int menuSelect;
+        cin >> menuSelect;
+        cin.ignore(256, '\n');
+        if (menuSelect == 1) {
+            MatrixGraph lookatThisGraph(daMap);
+            queue<string> qu;
 
 
-//    set<string> underKanye;
-//underKanye.insert("JayZ");
+            bool isInMap = lookatThisGraph.CheckArtist(artist);
 
-//    set<string> underJayZ;
-//    underJayZ.insert("kanye");
-//    underKanye.insert("Beyonce");
-//    underKanye.insert("Eminem");
-//    daMap["kanye"] = underKanye;
-//    daMap["JayZ"] = underJayZ;
-    queue<string> qu;
-
-    MatrixGraph lookatThisGraph(daMap);
-    bool isInMap = lookatThisGraph.CheckArtist(artist);
-    cout << lookatThisGraph.CheckArtist(artist) << endl;
-
-    //Vector of strings for each level
-    vector<vector<string>> levelStore(levelNum);
-    if (lookatThisGraph.CheckArtist(artist)) {
-        qu.push(artist);
-        for (int i = 0; i < levelNum; i++)  {
-            if (!qu.empty()) {
-                int quSize = qu.size();
-                cout << quSize << endl;
-                for (int j = 0; j < quSize; j++) {
-                    set<string> daSet = lookatThisGraph.GetAdjacents(qu.front());
-                    cout << "iteration " "" << j << endl;
-                    for (auto it = daSet.begin(); it != daSet.end(); it++) {
-                        qu.push(*it);
-                        levelStore[i].push_back(*it);
+            //Vector of strings for each level
+            vector<vector<string>> levelStore(levelNum);
+            if (isInMap) {
+                qu.push(artist);
+                unordered_set<string> alreadyIncluded;
+                for (int i = 0; i < levelNum; i++) {
+                    if (!qu.empty()) {
+                        int quSize = qu.size();
+                        for (int j = 0; j < quSize; j++) {
+                            set<string> daSet = lookatThisGraph.GetAdjacents(qu.front());
+                            for (auto it = daSet.begin(); it != daSet.end(); it++) {
+                                if (alreadyIncluded.find(*it) == alreadyIncluded.end()) {
+                                    alreadyIncluded.insert(*it);
+                                    qu.push(*it);
+                                    levelStore[i].push_back(*it);
+                                }
+                            }
+                            qu.pop();
+                        }
                     }
-                    qu.pop();
                 }
 
             }
+            else {
+                cout << "Artist not in data" << endl;
+                continue;
+            }
+
+            set<string> daSet = lookatThisGraph.GetAdjacents(artist);
+
+            for (int i = 0; i < levelStore.size(); i++) {
+                cout << "Level " << i + 1 << ": " << endl;
+                if (levelStore[i].size() == 0) {
+                    cout << "There are no more artists to include!" << endl;
+                    break;
+                }
+                for (string y : levelStore[i]) {
+                    cout << y << endl;
+                }
+            }
+        } else if (menuSelect == 2) {
+            ListGraph lookatThisGraph(daMap);
+            queue<string> qu;
+
+
+            bool isInMap = lookatThisGraph.CheckArtist(artist);
+
+            //Vector of strings for each level
+            vector<vector<string>> levelStore(levelNum);
+            if (isInMap) {
+                qu.push(artist);
+                unordered_set<string> alreadyIncluded;
+                for (int i = 0; i < levelNum; i++) {
+                    if (!qu.empty()) {
+                        int quSize = qu.size();
+                        for (int j = 0; j < quSize; j++) {
+                            set<string> daSet = lookatThisGraph.GetAdjacents(qu.front());
+                            cout << "iteration " "" << j << endl;
+                            for (auto it = daSet.begin(); it != daSet.end(); it++) {
+                                if (alreadyIncluded.find(*it) == alreadyIncluded.end()) {
+                                    alreadyIncluded.insert(*it);
+                                    qu.push(*it);
+                                    levelStore[i].push_back(*it);
+                                }
+                            }
+                            qu.pop();
+                        }
+
+                    }
+                }
+
+            }
+            else
+                cout << "Artist not present in data";
+
+            set<string> daSet = lookatThisGraph.GetAdjacents(artist);
+
+            for (int i = 0; i < levelStore.size(); i++) {
+                cout << "Level " << i + 1 << ": " << endl;
+                if (levelStore[i].size() == 0) {
+                    cout << "There are no more artists to include!" << endl;
+                    break;
+                }
+                for (string y : levelStore[i]) {
+                    cout << y << endl;
+                }
+            }
         }
-
-    }
-
-    set<string> daSet = lookatThisGraph.GetAdjacents(artist);
-    for (auto it = daSet.begin(); it != daSet.end(); it++)
-        cout << *it << endl;
-
-    for (int i = 0; i < levelStore.size(); i++) {
-        cout << "Level " << i+1 << ": " << endl;
-        for (string y : levelStore[i]) {
-            cout << y << endl;
+        else if (menuSelect == 3) {
+            cout << "Goodbye!" << endl;
+            runLevel = false;
         }
     }
-
-
-
-    // Same as first level
-    //vector<vector<string>> nameStorer(levelNum);
-
-
-
-
-
-
-
-
-//    for (auto x = daMap[artist].begin(); x != daMap[artist].end(); ++x) {
-//        qu.push(*x);
-//    }
-//    //Vector that stores vectors for each level
-//
-//    nameStorer[0].push_back(artist);
-//    for (int i = 0; i < levelNum; i++) {
-//        if (!qu.empty()) {
-//            int quSize = qu.size();
-//            for (int j = 0; j < quSize; j++) {
-//                for (auto x = daMap[qu.front()].begin(); x != daMap[qu.front()].end(); ++x) {
-//                    qu.push(*x);
-//                }
-//                nameStorer[i].push_back(qu.front());
-//                qu.pop();
-//            }
-//        }
-//        else {
-//            cout << "No more levels after " << i << "th iteration";
-//        }
-//
-//        for (i = 0; i < nameStorer.size(); i++) {
-//            cout << "Artists in level " << i << ":" << endl;
-//            string artists;
-//            for (string x : nameStorer[i]) {
-//                artists +=  x + ", " + "\n";
-//            }
-//            artists.pop_back();
-//            artists.pop_back();
-//        }
-//
-//        cout << "Script finished!!!" << endl;
-//
-//
-//
-//
-//
-//    }
 
 
 
