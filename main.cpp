@@ -12,6 +12,7 @@ using namespace std;
 int main() {
 //map<string, set(string)
     unordered_map<string, set<string>> daMap = returnMap();
+    cout << "Map size = " << daMap.size() << endl;
 //Check artist name
     cout << "Welcome to Custer, Ethan, and Isaac's Spotify project!" << endl;
     bool runLevel = true;
@@ -45,7 +46,7 @@ int main() {
                         for (int j = 0; j < quSize; j++) {
                             set<string> daSet = lookatThisGraph.GetAdjacents(qu.front());
                             for (auto it = daSet.begin(); it != daSet.end(); it++) {
-                                if (alreadyIncluded.find(*it) == alreadyIncluded.end()) {
+                                if (alreadyIncluded.find(*it) == alreadyIncluded.end() && *it != artist) {
                                     alreadyIncluded.insert(*it);
                                     qu.push(*it);
                                     levelStore[i].push_back(*it);
@@ -91,9 +92,8 @@ int main() {
                         int quSize = qu.size();
                         for (int j = 0; j < quSize; j++) {
                             set<string> daSet = lookatThisGraph.GetAdjacents(qu.front());
-                            cout << "iteration " "" << j << endl;
                             for (auto it = daSet.begin(); it != daSet.end(); it++) {
-                                if (alreadyIncluded.find(*it) == alreadyIncluded.end()) {
+                                if (alreadyIncluded.find(*it) == alreadyIncluded.end() && *it != artist) {
                                     alreadyIncluded.insert(*it);
                                     qu.push(*it);
                                     levelStore[i].push_back(*it);
@@ -106,8 +106,10 @@ int main() {
                 }
 
             }
-            else
+            else {
                 cout << "Artist not present in data";
+                break;
+            }
 
             set<string> daSet = lookatThisGraph.GetAdjacents(artist);
 
