@@ -6,16 +6,15 @@
 #include "ListGraph.cpp"
 #include "MatrixGraph.cpp"
 #include "Project3ReturnMap.cpp"
-//#include "MatrixGraph.h"
-// unordered_map<string, set<string>
 using namespace std;
 int main() {
-//map<string, set(string)
+    // Map that stores artists and their connections
     unordered_map<string, set<string>> daMap = returnMap();
     cout << "Map size = " << daMap.size() << endl;
 //Check artist name
     cout << "Welcome to Custer, Ethan, and Isaac's Spotify project!" << endl;
     bool runLevel = true;
+    // Loop to run project
     while (runLevel == true) {
         cout << "Please enter the name of the artist you want to check: ";
         string artist;
@@ -28,18 +27,18 @@ int main() {
         int menuSelect;
         cin >> menuSelect;
         cin.ignore(256, '\n');
+        // Menu for determining which data structure to run
         if (menuSelect == 1) {
             MatrixGraph lookatThisGraph(daMap);
             queue<string> qu;
-
-
+            //Checks if artists exists in map
             bool isInMap = lookatThisGraph.CheckArtist(artist);
-
             //Vector of strings for each level
             vector<vector<string>> levelStore(levelNum);
             if (isInMap) {
                 qu.push(artist);
                 unordered_set<string> alreadyIncluded;
+                //Uses queue to store data for each level, and then uses a set to see if the artists was included in a previous generation
                 for (int i = 0; i < levelNum; i++) {
                     if (!qu.empty()) {
                         int quSize = qu.size();
@@ -64,7 +63,7 @@ int main() {
             }
 
             set<string> daSet = lookatThisGraph.GetAdjacents(artist);
-
+            //Prints artists in set
             for (int i = 0; i < levelStore.size(); i++) {
                 cout << "Level " << i + 1 << ": " << endl;
                 if (levelStore[i].size() == 0) {
@@ -76,12 +75,10 @@ int main() {
                 }
             }
         } else if (menuSelect == 2) {
+            //This section is the same as above, using the Adjacency List instead of the adjacency matrix
             ListGraph lookatThisGraph(daMap);
             queue<string> qu;
-
-
             bool isInMap = lookatThisGraph.CheckArtist(artist);
-
             //Vector of strings for each level
             vector<vector<string>> levelStore(levelNum);
             if (isInMap) {
@@ -101,10 +98,8 @@ int main() {
                             }
                             qu.pop();
                         }
-
                     }
                 }
-
             }
             else {
                 cout << "Artist not present in data";
